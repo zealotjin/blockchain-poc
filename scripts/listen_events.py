@@ -48,7 +48,7 @@ def listen_to_events():
             for event in bounty_funded_filter.get_new_entries():
                 print(f"\n💰 BOUNTY FUNDED:")
                 print(f"  Bounty ID: {event['args']['bountyId']}")
-                print(f"  Amount: {event['args']['amount'] / 10**6} USDC")
+                print(f"  Amount: {event['args']['amount'] / 10**6} USDT")
                 print(f"  Funder: {event['args']['funder']}")
                 print(f"  Block: {event['blockNumber']}")
 
@@ -57,7 +57,7 @@ def listen_to_events():
                 print(f"\n🎯 CLAIMABLE SET:")
                 print(f"  Submission ID: {event['args']['submissionId']}")
                 print(f"  Recipient: {event['args']['recipient']}")
-                print(f"  Amount: {event['args']['amount'] / 10**6} USDC")
+                print(f"  Amount: {event['args']['amount'] / 10**6} USDT")
                 print(f"  Block: {event['blockNumber']}")
 
             # Check for payout events
@@ -65,7 +65,7 @@ def listen_to_events():
                 print(f"\n💸 PAYOUT CLAIMED:")
                 print(f"  Submission ID: {event['args']['submissionId']}")
                 print(f"  Recipient: {event['args']['recipient']}")
-                print(f"  Amount: {event['args']['amount'] / 10**6} USDC")
+                print(f"  Amount: {event['args']['amount'] / 10**6} USDT")
                 print(f"  Block: {event['blockNumber']}")
 
             time.sleep(2)  # Poll every 2 seconds

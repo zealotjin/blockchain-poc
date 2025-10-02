@@ -4,11 +4,11 @@ const fs = require("fs");
 async function main() {
   console.log("Deploying contracts...");
 
-  // Deploy MockUSDC first
-  const MockUSDC = await hre.ethers.getContractFactory("MockUSDC");
-  const mockUSDC = await MockUSDC.deploy();
-  await mockUSDC.waitForDeployment();
-  console.log("MockUSDC deployed to:", await mockUSDC.getAddress());
+  // Deploy MockUSDT first
+  const MockUSDT = await hre.ethers.getContractFactory("MockUSDT");
+  const mockUSDT = await MockUSDT.deploy();
+  await mockUSDT.waitForDeployment();
+  console.log("MockUSDT deployed to:", await mockUSDT.getAddress());
 
   // Deploy SubmissionRegistry
   const SubmissionRegistry = await hre.ethers.getContractFactory("SubmissionRegistry");
@@ -22,16 +22,16 @@ async function main() {
   await verificationManager.waitForDeployment();
   console.log("VerificationManager deployed to:", await verificationManager.getAddress());
 
-  // Deploy BountyPool with MockUSDC address
+  // Deploy BountyPool with MockUSDT address
   const BountyPool = await hre.ethers.getContractFactory("BountyPool");
-  const bountyPool = await BountyPool.deploy(await mockUSDC.getAddress());
+  const bountyPool = await BountyPool.deploy(await mockUSDT.getAddress());
   await bountyPool.waitForDeployment();
   console.log("BountyPool deployed to:", await bountyPool.getAddress());
 
   // Save deployment addresses
   const deploymentInfo = {
     network: hre.network.name,
-    mockUSDC: await mockUSDC.getAddress(),
+    mockUSDT: await mockUSDT.getAddress(),
     submissionRegistry: await submissionRegistry.getAddress(),
     verificationManager: await verificationManager.getAddress(),
     bountyPool: await bountyPool.getAddress(),
@@ -45,7 +45,7 @@ async function main() {
 
   console.log("\n=== Deployment Summary ===");
   console.log(`Network: ${deploymentInfo.network}`);
-  console.log(`MockUSDC: ${deploymentInfo.mockUSDC}`);
+  console.log(`MockUSDT: ${deploymentInfo.mockUSDT}`);
   console.log(`SubmissionRegistry: ${deploymentInfo.submissionRegistry}`);
   console.log(`VerificationManager: ${deploymentInfo.verificationManager}`);
   console.log(`BountyPool: ${deploymentInfo.bountyPool}`);

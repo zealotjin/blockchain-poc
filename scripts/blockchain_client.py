@@ -23,7 +23,7 @@ class BlockchainClient:
 
         # Load contract ABIs
         contract_abis = {}
-        for contract_name in ["SubmissionRegistry", "VerificationManager", "BountyPool", "MockUSDC"]:
+        for contract_name in ["SubmissionRegistry", "VerificationManager", "BountyPool", "MockUSDT"]:
             artifact_path = f"artifacts/contracts/{contract_name}.sol/{contract_name}.json"
             with open(artifact_path, "r") as f:
                 artifact = json.load(f)
@@ -32,20 +32,20 @@ class BlockchainClient:
         # Initialize contract instances
         self.contracts = {
             "submission_registry": self.w3.eth.contract(
-                address=deployment["addresses"]["submissionRegistry"],
+                address=deployment["submissionRegistry"],
                 abi=contract_abis["SubmissionRegistry"]
             ),
             "verification_manager": self.w3.eth.contract(
-                address=deployment["addresses"]["verificationManager"],
+                address=deployment["verificationManager"],
                 abi=contract_abis["VerificationManager"]
             ),
             "bounty_pool": self.w3.eth.contract(
-                address=deployment["addresses"]["bountyPool"],
+                address=deployment["bountyPool"],
                 abi=contract_abis["BountyPool"]
             ),
-            "mock_usdc": self.w3.eth.contract(
-                address=deployment["addresses"]["mockUSDC"],
-                abi=contract_abis["MockUSDC"]
+            "mock_usdt": self.w3.eth.contract(
+                address=deployment["mockUSDT"],
+                abi=contract_abis["MockUSDT"]
             )
         }
 
@@ -62,8 +62,8 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.key)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
 
         # Get submission ID from logs
@@ -83,19 +83,19 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.key)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         return receipt
 
     def fund_bounty(self, bounty_id: int, amount: int):
         """Fund a bounty pool"""
         # First approve the amount
-        mock_usdc = self.contracts["mock_usdc"]
+        mock_usdt = self.contracts["mock_usdt"]
         bounty_pool = self.contracts["bounty_pool"]
 
         # Approve transaction
-        approve_tx = mock_usdc.functions.approve(
+        approve_tx = mock_usdt.functions.approve(
             bounty_pool.address, amount
         ).build_transaction({
             'from': self.account.address,
@@ -104,8 +104,8 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.account.private_key)
-        approve_hash = self.w3.eth.send_raw_transaction(signed_approve.raw_transaction)
+        signed_approve = self.w3.eth.account.sign_transaction(approve_tx, self.account.key)
+        approve_hash = self.w3.eth.send_raw_transaction(signed_approve.rawTransaction)
         self.w3.eth.wait_for_transaction_receipt(approve_hash)
 
         # Fund bounty transaction
@@ -118,8 +118,8 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_fund = self.w3.eth.account.sign_transaction(fund_tx, self.account.private_key)
-        fund_hash = self.w3.eth.send_raw_transaction(signed_fund.raw_transaction)
+        signed_fund = self.w3.eth.account.sign_transaction(fund_tx, self.account.key)
+        fund_hash = self.w3.eth.send_raw_transaction(signed_fund.rawTransaction)
         receipt = self.w3.eth.wait_for_transaction_receipt(fund_hash)
         return receipt
 
@@ -136,8 +136,8 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.key)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         return receipt
 
@@ -154,8 +154,8 @@ class BlockchainClient:
             'gasPrice': self.w3.eth.gas_price
         })
 
-        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.private_key)
-        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.raw_transaction)
+        signed_txn = self.w3.eth.account.sign_transaction(transaction, self.account.key)
+        tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
         return receipt
 

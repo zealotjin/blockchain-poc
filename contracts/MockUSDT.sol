@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MockUSDC is ERC20, Ownable {
+contract MockUSDT is ERC20, Ownable {
     uint8 private _decimals = 6;
 
-    constructor() ERC20("Mock USDC", "MUSDC") Ownable(msg.sender) {
+    constructor() ERC20("Mock USDT", "MUSDT") Ownable(msg.sender) {
         _mint(msg.sender, 1000000 * 10**_decimals);
     }
 
@@ -20,7 +20,7 @@ contract MockUSDC is ERC20, Ownable {
     }
 
     function faucet(uint256 amount) external {
-        require(amount <= 1000 * 10**_decimals, "Max 1000 MUSDC per request");
+        require(amount <= 1000 * 10**_decimals, "Max 1000 MUSDT per request");
         _mint(msg.sender, amount);
     }
 }

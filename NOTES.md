@@ -1,14 +1,19 @@
 # Blockchain POC Development Notes
 
-## How to Run the POC
+RULE: Always add with the date and have the latest show up on the top of the list
 
-### 1. Environment Setup
+## 2025-10-01
+
+### Q: How do I run this?
+**A:** Complete run instructions:
+
+1. **Environment Setup**
 ```bash
 cp .env.example .env
 # Edit .env with your private key and RPC URL
 ```
 
-### 2. Local Testing (Recommended First)
+2. **Local Testing (Recommended First)**
 ```bash
 # Terminal 1: Start local blockchain
 npx hardhat node
@@ -21,7 +26,7 @@ source venv/bin/activate
 python scripts/test_flow.py
 ```
 
-### 3. Testnet Deployment
+3. **Testnet Deployment**
 ```bash
 # Deploy to Base Sepolia (cheaper, faster)
 npx hardhat run scripts/deploy.js --network base-sepolia
@@ -30,7 +35,7 @@ npx hardhat run scripts/deploy.js --network base-sepolia
 npx hardhat run scripts/deploy.js --network sepolia
 ```
 
-### 4. Test the Flow
+4. **Test the Flow**
 ```bash
 # Run complete submission→payout test
 python scripts/test_flow.py
@@ -40,8 +45,6 @@ python scripts/listen_events.py
 ```
 
 **Required:** Get testnet ETH from faucets for gas fees
-
----
 
 ## 2025-10-01
 

@@ -16,7 +16,7 @@ def compile_contracts():
     os.system("npx hardhat compile")
 
     artifacts = {}
-    contract_names = ["SubmissionRegistry", "VerificationManager", "BountyPool", "MockUSDC"]
+    contract_names = ["SubmissionRegistry", "VerificationManager", "BountyPool", "MockUSDT"]
 
     for name in contract_names:
         artifact_path = f"artifacts/contracts/{name}.sol/{name}.json"
@@ -95,8 +95,8 @@ def main():
     # Deploy contracts
     deployed_addresses = {}
 
-    # Deploy MockUSDC first
-    deployed_addresses["mockUSDC"] = deploy_contract(w3, account, "MockUSDC", artifacts)
+    # Deploy MockUSDT first
+    deployed_addresses["mockUSDT"] = deploy_contract(w3, account, "MockUSDT", artifacts)
 
     # Deploy SubmissionRegistry
     deployed_addresses["submissionRegistry"] = deploy_contract(w3, account, "SubmissionRegistry", artifacts)
@@ -104,10 +104,10 @@ def main():
     # Deploy VerificationManager
     deployed_addresses["verificationManager"] = deploy_contract(w3, account, "VerificationManager", artifacts)
 
-    # Deploy BountyPool with MockUSDC address
+    # Deploy BountyPool with MockUSDT address
     deployed_addresses["bountyPool"] = deploy_contract(
         w3, account, "BountyPool", artifacts,
-        constructor_args=[deployed_addresses["mockUSDC"]]
+        constructor_args=[deployed_addresses["mockUSDT"]]
     )
 
     # Save deployment info

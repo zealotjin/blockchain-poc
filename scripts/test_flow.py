@@ -25,27 +25,27 @@ def test_complete_flow():
     uri = "ipfs://QmX123abcdef..."
     mime_type = "image/png"
     bounty_id = 1
-    bounty_amount = 100 * 10**6  # 100 USDC (6 decimals)
-    payout_amount = 50 * 10**6   # 50 USDC payout
+    bounty_amount = 100 * 10**6  # 100 USDT (6 decimals)
+    payout_amount = 50 * 10**6   # 50 USDT payout
 
     try:
         # Step 1: Fund bounty pool first
         print("1. Funding bounty pool...")
-        # Get some test USDC from faucet
-        usdc_contract = client.contracts["mock_usdc"]
-        faucet_tx = usdc_contract.functions.faucet(1000 * 10**6).build_transaction({
+        # Get some test USDT from faucet
+        usdt_contract = client.contracts["mock_usdt"]
+        faucet_tx = usdt_contract.functions.faucet(1000 * 10**6).build_transaction({
             'from': client.account.address,
             'nonce': client.w3.eth.get_transaction_count(client.account.address),
             'gas': 100000,
             'gasPrice': client.w3.eth.gas_price
         })
-        signed_faucet = client.w3.eth.account.sign_transaction(faucet_tx, client.account.private_key)
-        faucet_hash = client.w3.eth.send_raw_transaction(signed_faucet.raw_transaction)
+        signed_faucet = client.w3.eth.account.sign_transaction(faucet_tx, client.account.key)
+        faucet_hash = client.w3.eth.send_raw_transaction(signed_faucet.rawTransaction)
         client.w3.eth.wait_for_transaction_receipt(faucet_hash)
-        print("   ✅ Got test USDC from faucet")
+        print("   ✅ Got test USDT from faucet")
 
         fund_receipt = client.fund_bounty(bounty_id, bounty_amount)
-        print(f"   ✅ Bounty funded: {bounty_amount/10**6} USDC")
+        print(f"   ✅ Bounty funded: {bounty_amount/10**6} USDT")
         print(f"   Transaction: {fund_receipt.transactionHash.hex()}")
 
         # Step 2: Register submission
@@ -65,7 +65,7 @@ def test_complete_flow():
         print("\n4. Marking submission as claimable...")
         mark_receipt = client.mark_claimable(submission_id, client.account.address, payout_amount)
         print(f"   ✅ Submission {submission_id} marked claimable")
-        print(f"   Payout Amount: {payout_amount/10**6} USDC")
+        print(f"   Payout Amount: {payout_amount/10**6} USDT")
         print(f"   Transaction: {mark_receipt.transactionHash.hex()}")
 
         # Step 5: Claim payout
@@ -95,7 +95,7 @@ def test_complete_flow():
 
         print(f"\nClaimable Details:")
         print(f"  - Recipient: {claimable[0]}")
-        print(f"  - Amount: {claimable[1]/10**6} USDC")
+        print(f"  - Amount: {claimable[1]/10**6} USDT")
         print(f"  - Claimed: {claimable[2]}")
 
         print("\n🎉 COMPLETE FLOW SUCCESSFUL! 🎉")
