@@ -1,7 +1,3 @@
-Got it 👍 — let’s strip away all code and keep only the functional + technical requirements for the blockchain-only POC. This will give you a checklist of what you need to deploy and test without backend/frontend.
-
-⸻
-
 📌 Blockchain-only POC: Functional & Technical Requirements
 
 🎯 Objectives
@@ -13,7 +9,6 @@ Got it 👍 — let’s strip away all code and keep only the functional + techn
 	4.	Claim payout in stablecoin (user → chain).
 	•	Keep everything minimal: minimal python scripts to test out setup of environment and functionalities.
 
-⸻
 
 🧩 Smart Contract Components
 
@@ -25,7 +20,6 @@ Got it 👍 — let’s strip away all code and keep only the functional + techn
 	•	Events: SubmissionRegistered(id, submitter, contentHash, uri, mime, timestamp).
 	•	Notes: No file storage, just hash/URI references.
 
-⸻
 
 2. Verification Manager
 	•	Purpose: Allow designated verifiers to accept/reject submissions.
@@ -38,7 +32,6 @@ Got it 👍 — let’s strip away all code and keep only the functional + techn
 	•	Events: SubmissionVerified(submissionId, verifier, accepted, reasonCode, timestamp).
 	•	Notes: Could later integrate with EAS (Ethereum Attestation Service).
 
-⸻
 
 3. Bounty Pool
 	•	Purpose: Manage bounty funds and payouts in stablecoin.
@@ -52,7 +45,6 @@ Got it 👍 — let’s strip away all code and keep only the functional + techn
 	•	PayoutClaimed(submissionId, recipient, amount)
 	•	Notes: Owner/admin sets claimable amounts for simplicity in POC.
 
-⸻
 
 ⚙️ Technical Requirements
 
@@ -81,7 +73,6 @@ Security / Ops (POC level)
 	•	Ensure fundBounty uses transferFrom with prior approval.
 	•	Keep contracts upgrade-minimal (plain deploy, no proxy for POC).
 
-⸻
 
 ✅ POC Test Flow (Happy Path)
 	1.	Brand funds bounty
@@ -98,7 +89,6 @@ Security / Ops (POC level)
 	•	Calls claim(submissionId, wallet).
 	•	Stablecoin transferred to user.
 
-⸻
 
 📊 Deliverables for POC
 	•	Deployed contracts on a testnet with addresses.
@@ -114,8 +104,3 @@ Security / Ops (POC level)
 	•	Verify/accept it.
 	•	Fund bounty pool and claim payout.
 
-⸻
-
-👉 This setup lets you learn the environment quickly: deploy, call, and track events — without backend or frontend.
-
-Would you like me to make a step-by-step “Hello World” test script plan (e.g., exact sequence of contract calls with example parameters) so you can walk through one submission-to-payout cycle on a local node?
